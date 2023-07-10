@@ -3,7 +3,7 @@
 
 Money management, budget tracker, and money saver.
 
-Website URL: https://purrfect-spot.kenkarlo.com
+Website URL: https://budgify.kenkarlo.com
 
 ## Features
 - Add income and expense
