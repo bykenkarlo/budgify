@@ -9,10 +9,10 @@
 						<footer class="footer">
 						<div class="container-fluid">
 							<div class="row">
-								<div class="col-md-6">
+								<div class="col-md-6 mt-2 mb-2">
 									<?=date('Y')?> &copy; <?=$siteSetting['website_name']?>   
 								</div>
-								<div class="col-md-6">
+								<div class="col-md-6 mt-2 mb-2">
 									<div class="footer-links d-none d-md-block footer-link-by">
 										Developed by: <a href="<?=$siteSetting['developer_site']?>"><?=$siteSetting['developer']?></a>
 									</div>

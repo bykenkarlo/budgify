@@ -60,13 +60,14 @@ class User_model extends CI_Model {
     {
         if (isset($this->session->user)) {
             $search = $this->input->get('search');
-            $query = $this->db->SELECT('cft.*, ct.category_name')
+            $query = $this->db->SELECT('cft.*, at.currency, ct.category_name')
                 ->FROM('cash_flow_tbl as cft')
                 ->JOIN('category_tbl as ct', 'ct.category_id = cft.category_id','left')
+                ->JOIN('accounts_tbl as at', 'at.account_id = cft.account_id','left')
                 ->WHERE("(cft.description LIKE '%".$search."%' OR cft.amount LIKE '%".$search."%' OR ct.category_name LIKE '%".$search."%' )", NULL, FALSE)
                 ->WHERE('cft.status', 'active')
                 ->WHERE('cft.user_id', $this->session->user_id)
-                ->WHERE('account_id',$this->input->get('account_id'))
+                ->WHERE('cft.account_id',$this->input->get('account_id'))
                 ->LIMIT($row_per_page, $row_no)
                 ->ORDER_BY('cft.created_at','desc')
                 ->GET()->result_array();
@@ -80,7 +81,7 @@ class User_model extends CI_Model {
                     'category'=>$q['category_name'],
                     'description'=>$q['description'],
                     'amount'=>number_format($q['amount'],2),
-                    'currency'=>$this->getCurrencySymbol(CURRENCY),
+                    'currency'=>$this->getCurrencySymbol($q['currency']),
                 );
                 array_push($result, $array);
             }
@@ -92,6 +93,14 @@ class User_model extends CI_Model {
         if($currency == 'PHP')
         {
             $symbol = '₱';
+        }
+        else if($currency == 'USD')
+        {
+            $symbol = '$';
+        }
+        else if($currency == 'EUR')
+        {
+            $symbol = '€';
         }
         return $symbol;
     }
@@ -176,6 +185,7 @@ class User_model extends CI_Model {
                 $end_date = date('Y-m-d 23:59:59');
                 $date_range = array('created_at >'=>$start_date, 'created_at <'=> $end_date);
             }
+            $currency = $this->getCurrencyData();
             $expense_stat = $this->getExpenseStatChart();
             $balance_amount = $this->getBalanceStat($date_range);
             $expense = $this->getExpenseStat($date_range);
@@ -186,10 +196,19 @@ class User_model extends CI_Model {
             $data['expense'] = number_format($expense, 2);
             // $data['savings'] = number_format($savings, 2);
             $data['expense_stat'] = $expense_stat;
-            $data['currency'] = $this->getCurrencySymbol(CURRENCY);
+            $data['currency'] = $this->getCurrencySymbol($currency);
 
             return $data;
         }
+    }
+    public function getCurrencyData()
+    {   
+        $query = $this->db->SELECT('currency')
+            ->WHERE('account_id',$this->input->get('account_id'))
+            ->GET('accounts_tbl')->row_array();
+
+        $currrency = $query['currency'];
+        return $currrency;
     }
     public function getBalanceStat($date_range)
     {   
@@ -343,6 +362,17 @@ class User_model extends CI_Model {
         );
         $this->db->WHERE('account_id',$account_id)->WHERE('user_id',$this->session->user_id)
             ->UPDATE('accounts_tbl', $data_arr);
+    }
+    public function removeCashflow(){
+        if(isset($this->session->user_id)){
+            $this->db->WHERE('id',$this->input->post('id'))
+                ->WHERE('user_id',$this->session->user_id)
+                ->DELETE('cash_flow_tbl');
+
+            $response['status'] = 'success';
+            $response['message'] = 'Item successfully removed!';
+            return $response;
+        }
     }
 
 

@@ -81,6 +81,7 @@ $route['api/v1/user/_get_account_type'] = 'User/getAccountType';
 $route['api/v1/user/_new_account'] = 'User/addNewAccount';
 $route['api/v1/user/_get_accounts'] = 'User/getAccounts';
 $route['api/v1/user/_get_accounts_list'] = 'User/getAccountsList';
+$route['api/v1/user/_remove_cashflow_data'] = 'User/removeCashflow';
 
 # REPORTS
 $route['api/v1/reports/_monthly_sales_reports'] = 'Reports/getMonthlySalesReports';

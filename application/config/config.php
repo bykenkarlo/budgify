@@ -457,6 +457,7 @@ $config['csrf_exclude_uris'] = array(
     'api/v1/user/_new_cashflow_record',
     'api/v1/user/_update_cashflow_record',
     'api/v1/user/_new_account',
+    'api/v1/user/_remove_cashflow_data',
 );
 
 /*

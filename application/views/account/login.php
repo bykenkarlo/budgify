@@ -3,7 +3,7 @@
 		<div class="other-section">
             <div class="container">
                 <div class="row justify-content-center">
-                    <div class="col-xxl-4 col-lg-5  margin-top-40 mb-5">
+                    <div class="col-xxl-4 col-lg-5  margin-top-80 mb-5">
                         <div class="card mb-3">
                             <div class="card-header pt-2 pb-2 text-center bg-primary rounded">
                                 <span>

@@ -12,9 +12,6 @@ class User extends CI_Controller {
         $this->load->library('user_agent');
         $this->load->library('pagination');
         $this->load->library('form_validation');
-        $data = $this->User_model->getCurrency();
-        define('CURRENCY', $data['currency']);
-       
     }
     public function getCashflow() 
     {
@@ -173,6 +170,11 @@ class User extends CI_Controller {
     public function getAccountsList() 
     {
         $data = $this->User_model->getAccountsList();
+        $this->output->set_content_type('application/json')->set_output(json_encode(array('data'=>$data)));
+    }
+    public function removeCashflow() 
+    {
+        $data = $this->User_model->removeCashflow();
         $this->output->set_content_type('application/json')->set_output(json_encode(array('data'=>$data)));
     }
 

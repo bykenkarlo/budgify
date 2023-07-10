@@ -116,7 +116,9 @@
                                                     </div>
                                                 
                                                     <div class="mb-2 col-lg-12">
-                                                        <canvas id="expense_structure" class="apex-charts mt-3"></canvas>
+                                                        <canvas id="expense_structure" class="apex-charts mt-3">
+                                                            
+                                                        </canvas>
                                                     </div>
                                                 </div>
                                             </div>
@@ -141,6 +143,58 @@
                                                 </div>
                                                 <table class="table table-centered table-hover mb-0 font-12">
                                                     <tbody id="cash_flow_tbl">
+                                                        <tr class="cursor-pointer">
+                                                            <td width="20" class="placeholder-glow"><div class="avatar-sm"><span class="avatar-title bg-primary rounded-circle"><i class="uil-ellipsis-h"></i></span></div></td>
+                                                            <td>
+                                                                <div class="placeholder-glow">
+                                                                    <span class="placeholder col-4"></span><br>
+                                                                    <span class="placeholder col-10"></span>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <div class="placeholder-glow">
+                                                                    <span class="placeholder col-10"></span><br>
+                                                                    <span class="placeholder col-6"></span>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr class="cursor-pointer">
+                                                            <td width="20" class="placeholder-glow"><div class="avatar-sm"><span class="avatar-title bg-primary rounded-circle"><i class="uil-ellipsis-h"></i></span></div></td>
+                                                            <td>
+                                                                <div class="placeholder-glow">
+                                                                    <span class="placeholder col-4"></span><br>
+                                                                    <span class="placeholder col-10"></span>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <div class="placeholder-glow">
+                                                                    <span class="placeholder col-10"></span><br>
+                                                                    <span class="placeholder col-6"></span>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+
+                                                        <!-- <div class="card shadow-none mb-0" aria-hidden="true">
+                                                            <div class="card-body row">
+                                                                <div class="col-4 col-md-2 col-lg-2 ">
+                                                                    <div class="avatar-sm placeholder-glow">
+                                                                        <span class="avatar-title placeholder mt-1 bg-primary rounded-circle"> <i class="uil-ellipsis-h"></i></span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-8 col-md-6 col-lg-6">
+                                                                    <div class="card-title placeholder-glow">
+                                                                        <span class="placeholder col-6"></span><br>
+                                                                        <span class="placeholder col-8"></span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-12 col-md-4 col-lg-4">
+                                                                    <div class="card-text placeholder-glow">
+                                                                        <span class="placeholder col-12"></span><br>
+                                                                        <span class="placeholder col-6"></span>
+                                                                    </div>
+                                                                </div>
+                                                            </div> 
+                                                        </div> -->
                                                     </tbody>
                                                 </table>
                                                 <div class="row mb-4">
@@ -166,7 +220,7 @@
                                 <i class="uil uil-plus"></i>
                             </div>
                             <?php } else { ?>
-                            <div id="add_cashflow" class="add-cashflow">
+                            <div id="add_cashflow" class="add-cashflow" onclick="addCashflow()">
                                 <i class="uil uil-plus"></i>
                             </div>
                             <?php } ?>
@@ -347,7 +401,7 @@
                                                 
                                                  <div class="text-end mb-2 mt-4">
                                                     <button class="btn btn-default br-25 btn-lg padding-right-20 padding-left-20 mt-1" type="button" id="close_cashflow_btn2">Cancel</button>
-                                                    <button class="btn btn-danger br-25 btn-lg padding-right-20 padding-left-20 mt-1" type="button" id="remove_cashflow_btn">Remove</button>
+                                                    <button class="btn btn-dark br-25 btn-lg padding-right-20 padding-left-20 mt-1" type="button" onclick="comfirmRemoveCashflow()" data-id="" id="remove_cashflow_btn">Remove</button>
                                                     <button class="btn btn-primary br-25 btn-lg padding-right-20 padding-left-20 mt-1" type="submit" id="update_cashflow_btn">Save</button>
                                                 </div>
                                             </form>
