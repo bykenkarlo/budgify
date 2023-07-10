@@ -224,6 +224,7 @@
                                 <i class="uil uil-plus"></i>
                             </div>
                             <?php } ?>
+                            <input type="hidden" id="hidden_acct_id">
                             
                             
 
@@ -359,7 +360,7 @@
                                                 <div class="row">
                                                     <div class="mt-2 col-lg-6 ">
                                                         <div class="form-floating">
-                                                            <select class="form-select cf-input add-account-select" id="add_account_select" name="account_id" required readonly>
+                                                            <select class="form-select cf-input add-account-select" id="edit_account_select" name="account_id" required readonly>
                                                                 <option disabled selected>Choose</option>
                                                             </select>
                                                             <label for="type">Account</label>

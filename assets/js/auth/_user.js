@@ -3,12 +3,6 @@ if(_state == 'dashboard'){
 	// getCashflowList(1, '', account_id);
 	// cashflowStatistics('30_days', account_id);
 }
-function getAccountData(acct_id){
-	$("#account_list .account-btn").removeClass('active')
-	$('#account_'+acct_id).addClass('active');
-	getCashflowList(1, '', acct_id);
-	cashflowStatistics('30_days', acct_id);
-}
 $(document).on("input", "#amount", function() {
     var $this = $(this);
     $this.val($this.val().replace(/[^\d.]/g, ''));    
@@ -17,17 +11,25 @@ $(document).on("input", "#account_amount", function() {
     var $this = $(this);
     $this.val($this.val().replace(/[^\d.]/g, ''));    
 });
+function getAccountData(acct_id){
+	$("#hidden_acct_id").val(acct_id)
+	$("#account_list .account-btn").removeClass('active')
+	$('#account_'+acct_id).addClass('active');
+	getCashflowList(1, '', acct_id);
+	cashflowStatistics('30_days', acct_id);
+}
+function addCashflow(){
+	acct_id = $("#hidden_acct_id").val()
+	getCategory();
+	getAccountsList(acct_id);
+    $('#_new_record_modal').modal('toggle');
+}
 function addAccount(){
 	newAccount();
 }
 function newAccount(){
 	getAccountType();
     $('#add_account_modal').modal('toggle');
-}
-function addCashflow(){
-	getCategory();
-	getAccountsList();
-    $('#_new_record_modal').modal('toggle');
 }
 $("#close_create_acct_btn").on('click', function(){
     $('#add_account_modal').modal('hide')
@@ -241,7 +243,7 @@ function getCategoryInfo(category){
 	}
 	else if(category == 'Transfer'){
 		icon = '<i class="uil-exchange font-24"></i>';
-		color = 'bg-success';
+		color = 'bg-secondary';
 	}
 	else if(category == 'Expense'){
 		icon = '<i class="uil-money-insert font-24"></i>';
@@ -393,8 +395,7 @@ function openRecordDetails(id, page_no){
 	})
 	.then(response => response.json())
 	.then(res => {
-		getAccountsListEdit(res.data.account_id, res.data.account_name);
-
+		getAccountsList(res.data.account_id);
 		$("#edit_id").val(res.data.id);
 		$("#edit_type").val(res.data.type);
 		$("#edit_date").val(res.data.date);
@@ -460,7 +461,17 @@ $("#update_cashflow_form").on('submit', function(e){
 			  	title: 'Success!',
 			 	text: res.data.message,
 			})
-            getAccounts();
+            // getAccounts();
+
+			
+			$("#account_list .account-btn").removeClass('active')
+			account_id = $("#edit_account_select").val();
+			$("#hidden_acct_id").val(account_id)
+			$('#account_'+account_id+'').addClass('active');
+
+			getCashflowList(1, '', account_id);
+			cashflowStatistics('30_days', account_id);
+
 			$('#update_cashflow_form input').val('');
 			$("#edit_record_modal").modal('hide');
 		}
@@ -577,6 +588,8 @@ function getAccounts(){
 				getCashflowList(1, '', res.data[0].account_id);
 				cashflowStatistics('30_days', res.data[0].account_id);
 			}
+			$("#account_list .account-btn").removeClass('active')
+			$("#hidden_acct_id").val(res.data[0].account_id)
 			$('#account_'+res.data[0].account_id+'').addClass('active');
 		}
 		if(res.data.length == 1){
@@ -589,7 +602,7 @@ function getAccounts(){
 		console.error('Error:', error);
 	});
 }
-function getAccountsList(){
+function getAccountsList(acct_id){
 	string2 = '';
 	fetch(base_url+'api/v1/user/_get_accounts_list', {
 		method: "GET",
@@ -608,15 +621,12 @@ function getAccountsList(){
             }
             $('.add-account-select').html(string2);
         }
+		$("#add_account_select").val(acct_id);
+		$("#edit_account_select").val(acct_id);
 	})
 	.catch((error) => {
 		console.error('Error:', error);
 	});
-}
-function getAccountsListEdit(account_id, wallet_name){
-	string2 +='<option value="'+account_id+'">'+wallet_name+'</option>'
-	$('.add-account-select').html(string2);
-
 }
 function comfirmRemoveCashflow(){ //delete article
 	id = $("#edit_id").val();
